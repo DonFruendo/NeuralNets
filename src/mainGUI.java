@@ -28,6 +28,8 @@ public class mainGUI extends JFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        NetController.getInstance().createNet();
     }
 
     public mainGUI(String caption) {
