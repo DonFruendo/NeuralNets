@@ -1,6 +1,8 @@
 import neuralNet.Neuron;
 import neuralNet.Synapse;
 
+import java.util.ArrayList;
+
 /**
  * NetController
  *
@@ -15,21 +17,95 @@ public class NetController {
         return ourInstance;
     }
 
+
+    private ArrayList<ArrayList<Neuron>> allLayers = new ArrayList<>();
+    private ArrayList<Synapse> allSynapses = new ArrayList<>();
+
     private NetController() {
 
     }
 
     public void createNet() {
-        Neuron n0 = new Neuron();
-        Neuron n1 = new Neuron();
-        Neuron n2 = new Neuron();
+        ArrayList<Integer> layerSizes = new ArrayList<>();
+        layerSizes.add(5);
+        layerSizes.add(4);
+        createMeshedNet(layerSizes);
+    }
 
-        Synapse s1 = new Synapse(n1, n2, 0.5);
-        Synapse s2 = new Synapse(n0, n2, 10);
+    private ArrayList<Neuron> getInputNeurons() {
+        return allLayers.get(0);
+    }
 
-        n0.setInput(0.04);
-        n1.setInput(10);
+    private ArrayList<Neuron> getOutputNeurons() {
+        return allLayers.get(allLayers.size()-1);
+    }
 
-        System.out.println(n2.getSignal());
+    private void createMeshedNet(ArrayList<Integer> layerSizes) {
+        if(layerSizes.size() >= 2) {
+            for(int layer = 0; layer < layerSizes.size(); layer++) {
+                ArrayList<Neuron> layerList = new ArrayList<>();
+                for(int i = 0; i < layerSizes.get(layer); i++) {
+                    Neuron neuron;
+                    if(layer == 0) {
+                        neuron = new Neuron("IN"+ i);
+                    } else if(layer == layerSizes.size()-1) {
+                        neuron = new Neuron("OUT" + i);
+                    } else {
+                        neuron = new Neuron();
+                    }
+                    if(layer != 0) {
+                        for(Neuron lowerLayerNeuron : allLayers.get(layer - 1)) {
+                            Synapse synapse = new Synapse(lowerLayerNeuron, neuron, 0.0008);
+                            allSynapses.add(synapse);
+                        }
+                    }
+                    layerList.add(neuron);
+                }
+                allLayers.add(layerList);
+            }
+        }
+    }
+
+    public void updateInputs(ArrayList<Double> inputs) {
+        ArrayList<Neuron> inputLayer = allLayers.get(0);
+        if(inputs.size() == inputLayer.size()) {
+            for (int i = 0; i < inputLayer.size(); i++) {
+                Neuron neuron = inputLayer.get(i);
+                neuron.setInput(inputs.get(i));
+            }
+        }
+    }
+
+    public ArrayList<Double> calculateNet() {
+        ArrayList<Double> results = new ArrayList<>();
+        for(Neuron outNeuron : allLayers.get(allLayers.size()-1)) {
+            results.add(outNeuron.getSignal());
+        }
+        mainGUI.getInstance().setValues(results);
+        return results;
+    }
+
+    public void learn(ArrayList<Double> inputs, String expectedWinner) {
+        // TODO Improve the learning method
+
+        // find the highest value
+        Neuron highest = null;
+        double highValue = 0;
+        ArrayList<Double> results = calculateNet();
+        for(int i = 0; i < results.size(); i++) {
+            if(highValue <= results.get(i)) {
+                highest = getOutputNeurons().get(i);
+                highValue = results.get(i);
+            }
+        }
+
+        // is it correct?
+        if(expectedWinner.equals(highest.getID())) {
+            // if yes, encourage the participating synapses
+            highest.giveTreats();
+        } else {
+            // if no, discourage the participating synapses
+            highest.giveSours();
+        }
     }
 }

@@ -29,6 +29,14 @@ public class Synapse {
         return from.getSignal() * weight;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
     public void attachTo(Neuron from, Neuron to) {
         this.from = from;
         this.to = to;

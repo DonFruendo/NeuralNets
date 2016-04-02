@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="mainGUI">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="32e28" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="32e28" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -131,7 +131,7 @@
               </component>
             </children>
           </grid>
-          <grid id="646a5" binding="outputPanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="646a5" binding="sliderLabelPanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -139,44 +139,86 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="94531" class="javax.swing.JLabel" binding="outputLeft">
+              <component id="94531" class="javax.swing.JLabel" binding="labelLeft">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="0"/>
+                  <text value="0.0"/>
                 </properties>
               </component>
-              <component id="16334" class="javax.swing.JLabel" binding="outputFrontLeft">
+              <component id="16334" class="javax.swing.JLabel" binding="labelFrontLeft">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="0"/>
+                  <text value="0.0"/>
                 </properties>
               </component>
-              <component id="dd476" class="javax.swing.JLabel" binding="outputFront">
+              <component id="dd476" class="javax.swing.JLabel" binding="labelFront">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="0"/>
+                  <text value="0.0"/>
                 </properties>
               </component>
-              <component id="2f276" class="javax.swing.JLabel" binding="outputFrontRight">
+              <component id="2f276" class="javax.swing.JLabel" binding="labelFrontRight">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="0"/>
+                  <text value="0.0"/>
                 </properties>
               </component>
-              <component id="12f37" class="javax.swing.JLabel" binding="outputRight">
+              <component id="12f37" class="javax.swing.JLabel" binding="labelRight">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="0"/>
+                  <text value="0.0"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="2b444" binding="outputPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="f0f8a" class="javax.swing.JLabel" binding="outForward">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="0.000"/>
+                </properties>
+              </component>
+              <component id="37757" class="javax.swing.JLabel" binding="outBackwards">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="0.000"/>
+                </properties>
+              </component>
+              <component id="45d72" class="javax.swing.JLabel" binding="outRight">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="0.000"/>
+                </properties>
+              </component>
+              <component id="77c2e" class="javax.swing.JLabel" binding="outLeft">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="0.000"/>
                 </properties>
               </component>
             </children>
@@ -208,6 +250,14 @@
           </scrollpane>
         </children>
       </grid>
+      <component id="41737" class="javax.swing.JButton" binding="learnStuffButton" default-binding="true">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Learn Stuff"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>
