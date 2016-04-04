@@ -50,7 +50,11 @@ public class Neuron {
             for (Synapse synapse : incoming) {
                 result += synapse.getSignal();
             }
-            return result;
+            if(result >= threshold) {
+                return result;
+            } else {
+                return 0;
+            }
         } else {
             return input;
         }

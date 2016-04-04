@@ -29,6 +29,14 @@ public class Synapse {
         return from.getSignal() * weight;
     }
 
+    public Neuron getFrom() {
+        return from;
+    }
+
+    public Neuron getTo() {
+        return to;
+    }
+
     public double getWeight() {
         return weight;
     }

@@ -40,6 +40,8 @@ public class NetController {
         return allLayers.get(allLayers.size()-1);
     }
 
+    public ArrayList<Synapse> getAllSynapses() { return allSynapses; }
+
     private void createMeshedNet(ArrayList<Integer> layerSizes) {
         if(layerSizes.size() >= 2) {
             for(int layer = 0; layer < layerSizes.size(); layer++) {
@@ -87,25 +89,30 @@ public class NetController {
 
     public void learn(ArrayList<Double> inputs, String expectedWinner) {
         // TODO Improve the learning method
+        for(int loop = 0; loop < 10; loop++) {
+            // find the highest values
+            ArrayList<Neuron> highest = new ArrayList<>();
+            double highValue = Double.MIN_VALUE;
+            ArrayList<Double> results = calculateNet();
+            for (int i = 0; i < results.size(); i++) {
+                if (highValue < results.get(i)) {
+                    highest = new ArrayList<>();
+                    highValue = results.get(i);
+                }
+                if(highValue == results.get(i))
+                    highest.add(getOutputNeurons().get(i));
+                }
 
-        // find the highest value
-        Neuron highest = null;
-        double highValue = 0;
-        ArrayList<Double> results = calculateNet();
-        for(int i = 0; i < results.size(); i++) {
-            if(highValue <= results.get(i)) {
-                highest = getOutputNeurons().get(i);
-                highValue = results.get(i);
+            for(Neuron neuron : highest) {
+                // is it correct?
+                if (expectedWinner.equals(neuron.getID())) {
+                    // if yes, encourage the participating synapses
+                    neuron.giveTreats();
+                } else {
+                    // if no, discourage the participating synapses
+                    neuron.giveSours();
+                }
             }
-        }
-
-        // is it correct?
-        if(expectedWinner.equals(highest.getID())) {
-            // if yes, encourage the participating synapses
-            highest.giveTreats();
-        } else {
-            // if no, discourage the participating synapses
-            highest.giveSours();
         }
     }
 }

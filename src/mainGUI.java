@@ -1,9 +1,15 @@
+import neuralNet.Neuron;
+import neuralNet.Synapse;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * NeuralNets
@@ -17,7 +23,6 @@ public class mainGUI extends JFrame {
 
     private JPanel consolePanel;
     private JPanel inputPanel;
-    private JPanel sliderLabelPanel;
     private JPanel mainPanel;
     private JSlider sliderLeft;
     private JSlider sliderFrontLeft;
@@ -36,6 +41,12 @@ public class mainGUI extends JFrame {
     private JLabel outRight;
     private JLabel outLeft;
     private JButton learnStuffButton;
+    private JTable tableConnectionWeights;
+
+
+    private DefaultTableModel tableModel;
+    private HashMap<Neuron, Integer> ids = new HashMap<>();
+    private int idcounter = 0;
 
 
     private final double MAX_SLIDER_INPUT = 1;
@@ -91,6 +102,9 @@ public class mainGUI extends JFrame {
                 learnDialog.setVisible(true);
             }
         });
+
+        tableModel = new DefaultTableModel();
+        tableConnectionWeights.setModel(tableModel);
     }
 
     private void updateNetController() {
@@ -110,6 +124,31 @@ public class mainGUI extends JFrame {
         outBackwards.setText(Math.round(values.get(1)*factor)/factor + "");
         outRight.setText(Math.round(values.get(2)*factor)/factor + "");
         outLeft.setText(Math.round(values.get(3)*factor)/factor + "");
+
+        ArrayList<Synapse> synapses = netController.getAllSynapses();
+        for(Synapse synapse : synapses) {
+            Neuron from = synapse.getFrom();
+            Neuron to = synapse.getTo();
+            int idFrom = ids.getOrDefault(from, -1);
+            if(idFrom == -1) {
+                ids.put(from, idcounter);
+                idFrom = idcounter;
+                idcounter ++;
+                tableModel.addRow(new Object[0]);
+                tableModel.addColumn(idcounter);
+                addToConsole(idcounter + "");
+            }
+            int idTo = ids.getOrDefault(to, -1);
+            if(idTo == -1) {
+                ids.put(to, idcounter);
+                idTo = idcounter;
+                idcounter ++;
+                tableModel.addRow(new Object[0]);
+                tableModel.addColumn(idcounter);
+                addToConsole(idcounter + "");
+            }
+            tableConnectionWeights.setValueAt(Math.round(synapse.getWeight() * factor*1000) / (factor*1000), idFrom, idTo);
+        }
     }
 
     public ArrayList<Double> getValues() {
