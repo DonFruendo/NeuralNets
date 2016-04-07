@@ -1,4 +1,4 @@
-package neuralNet;
+package v1.neuralNet;
 
 import java.util.ArrayList;
 
@@ -45,19 +45,21 @@ public class Neuron {
     // --- Other Methods ---
 
     public double getSignal() {
+        double result;
         if(incoming != null) {
-            double result = 0;
+            result = 0;
             for (Synapse synapse : incoming) {
                 result += synapse.getSignal();
             }
-            if(result >= threshold) {
-                return result;
-            } else {
-                return 0;
-            }
         } else {
-            return input;
+            result = input;
         }
+
+        return sigmoid(result);
+    }
+
+    private static final double sigmoid(double input) {
+        return 1 / (1 + Math.exp(-input));
     }
 
     public void attachIncomingSynapse(Synapse incomingSynapse) {
@@ -88,5 +90,9 @@ public class Neuron {
                 synapse.setWeight(synapse.getWeight() - learnrate);
             }
         }
+    }
+
+    public String toString() {
+        return "Neuron[" + ID + "]";
     }
  }

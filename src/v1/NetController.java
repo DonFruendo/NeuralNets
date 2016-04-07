@@ -1,5 +1,7 @@
-import neuralNet.Neuron;
-import neuralNet.Synapse;
+package v1;
+
+import v1.neuralNet.Neuron;
+import v1.neuralNet.Synapse;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,19 @@ public class NetController {
     }
 
     public ArrayList<Synapse> getAllSynapses() { return allSynapses; }
+    public ArrayList<Neuron> getAllNeurons(){
+        ArrayList<Neuron> result = new ArrayList<>();
+        for(ArrayList<Neuron> layer : allLayers) {
+            for(Neuron neuron : layer) {
+                result.add(neuron);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<ArrayList<Neuron>> getAllLayers() {
+        return allLayers;
+    }
 
     private void createMeshedNet(ArrayList<Integer> layerSizes) {
         if(layerSizes.size() >= 2) {
@@ -59,6 +74,7 @@ public class NetController {
                         for(Neuron lowerLayerNeuron : allLayers.get(layer - 1)) {
                             Synapse synapse = new Synapse(lowerLayerNeuron, neuron, 0.0008);
                             allSynapses.add(synapse);
+                            mainGUI.getInstance().addToConsole(synapse.toString());
                         }
                     }
                     layerList.add(neuron);

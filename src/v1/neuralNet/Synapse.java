@@ -1,4 +1,4 @@
-package neuralNet;
+package v1.neuralNet;
 
 /**
  * Synapse
@@ -50,5 +50,9 @@ public class Synapse {
         this.to = to;
         from.attachOutgoingSynapse(this);
         to.attachIncomingSynapse(this);
+    }
+
+    public String toString() {
+        return "Synapse (" + from + "->" + to +")";
     }
 }

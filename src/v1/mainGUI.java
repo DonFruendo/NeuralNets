@@ -1,11 +1,12 @@
-import neuralNet.Neuron;
-import neuralNet.Synapse;
+package v1;
+
+import v1.neuralNet.Neuron;
+import v1.neuralNet.Synapse;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -104,6 +105,8 @@ public class mainGUI extends JFrame {
         });
 
         tableModel = new DefaultTableModel();
+        tableModel.addColumn("");
+        tableModel.addRow(new Object[0]);
         tableConnectionWeights.setModel(tableModel);
     }
 
@@ -125,28 +128,22 @@ public class mainGUI extends JFrame {
         outRight.setText(Math.round(values.get(2)*factor)/factor + "");
         outLeft.setText(Math.round(values.get(3)*factor)/factor + "");
 
+        ArrayList<Neuron> neurons = netController.getAllNeurons();
+        for(int id = 1; id <= neurons.size(); id++) {
+            Neuron neuron = neurons.get(id-1);
+            if(ids.getOrDefault(neuron, -1) == -1) {
+                ids.put(neuron, id);
+                tableModel.addRow(new Object[]{neuron.getID()});
+                tableModel.addColumn(neuron.getID());
+            }
+        }
+
         ArrayList<Synapse> synapses = netController.getAllSynapses();
         for(Synapse synapse : synapses) {
             Neuron from = synapse.getFrom();
             Neuron to = synapse.getTo();
             int idFrom = ids.getOrDefault(from, -1);
-            if(idFrom == -1) {
-                ids.put(from, idcounter);
-                idFrom = idcounter;
-                idcounter ++;
-                tableModel.addRow(new Object[0]);
-                tableModel.addColumn(idcounter);
-                addToConsole(idcounter + "");
-            }
             int idTo = ids.getOrDefault(to, -1);
-            if(idTo == -1) {
-                ids.put(to, idcounter);
-                idTo = idcounter;
-                idcounter ++;
-                tableModel.addRow(new Object[0]);
-                tableModel.addColumn(idcounter);
-                addToConsole(idcounter + "");
-            }
             tableConnectionWeights.setValueAt(Math.round(synapse.getWeight() * factor*1000) / (factor*1000), idFrom, idTo);
         }
     }
